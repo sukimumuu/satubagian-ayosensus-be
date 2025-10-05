@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('password');
+            $table->string('nik', 16)->unique()->nullable();
+            $table->string('otp', 6)->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
