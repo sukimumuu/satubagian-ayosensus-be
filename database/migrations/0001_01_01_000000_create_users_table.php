@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('nik', 16)->unique()->nullable();
             $table->string('otp', 6)->nullable();
             $table->string('phone')->unique()->nullable();
+            $table->boolean('is_active')->nullable()->default(false);
+            $table->boolean('is_valid')->nullable()->default(false);
+            $table->string('kode_desa')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
