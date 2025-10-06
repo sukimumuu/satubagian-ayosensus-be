@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
 
         Route::middleware(['role:superadmin'])->group(function () {
             // Officer Management
+            Route::get('/officer', [OfficerManagementController::class, 'index']);
             Route::post('/officer', [OfficerManagementController::class, 'store']);
         });
     });

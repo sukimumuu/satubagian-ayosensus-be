@@ -23,7 +23,7 @@ class CreateOfficerRequest extends FormRequest
     {
         return [
             'data' => 'required|array',
-            'data.*.name' => 'required',
+            'data.*.name' => 'required|unique:users,name',
             'data.*.password' => 'required|min:6',
             'data.*.kode_desa' => 'required|exists:villages,kode',
         ];
@@ -32,11 +32,12 @@ class CreateOfficerRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Nama tidak boleh kosong',
-            'password.required' => 'Password tidak boleh kosong',
-            'password.min' => 'Password minimal 6 karakter',
-            'kode_desa.required' => 'Desa tidak boleh kosong',
-            'kode_desa.exists' => 'Desa tidak ditemukan',
+            'data.*.name.required' => 'Nama tidak boleh kosong',
+            'data.*.name.unique' => 'Nama pengguna sudah terdaftar',
+            'data.*.password.required' => 'Password tidak boleh kosong',
+            'data.*.password.min' => 'Password minimal 6 karakter',
+            'data.*.kode_desa.required' => 'Desa tidak boleh kosong',
+            'data.*.kode_desa.exists' => 'Desa tidak ditemukan',
         ];
     }
 }

@@ -7,10 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\OfficersResource;
 use App\Http\Requests\CreateOfficerRequest;
 
 class OfficerManagementController extends Controller
 {
+    public function index(){
+        $officers = User::with('roles')->whereHas('roles', function($q){
+            $q->where('name', 'verifier');
+        })->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Data petugas berhasil diambil !',
+            'data' => OfficersResource::collection($officers)
+        ]);
+    }
     public function store(CreateOfficerRequest $request){
         $data = $request->validated();
         $res = [];
