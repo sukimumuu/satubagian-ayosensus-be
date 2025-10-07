@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\OtpServices;
 use App\Http\Resources\MeResource;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
@@ -75,6 +77,38 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60,
             'role' => auth()->user()->getRoleNames()
         ]);
+    }
+
+    public function checkNik(Request $request, OtpServices $otpServices) {
+       try {
+            $data = $request->validate([
+                'nik' => 'required|max:16',
+                'mother_name' => 'required',
+                'phone' => 'required',
+            ]);
+            
+            $result = $otpServices->checkNik($data);
+            
+            if (! $result['success']) {
+                return response()->json([
+                    'success'  => false,
+                    'message' => $result['message']
+                ], 422);
+            }
+    
+            return response()->json([
+                'success'  => true,
+                'message' => $result['message'],
+                'data'    => $result['data']
+            ], 200);
+
+        } catch (\Throwable $th) {
+            Log::error("Message validate nik : ".$th->getMessage());
+            return response()->json([
+                'success'  => false,
+                'message' => $th->getMessage()
+            ], 422);
+        }
     }
 
 }

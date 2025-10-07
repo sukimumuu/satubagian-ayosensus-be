@@ -8,5 +8,5 @@ class DummyEducation extends Model
 {
     protected $table = 'dummy_educations';
     protected $guarded = ['id']; 
-    protected $timestamps = false;
+    public $timestamps = false;
 }

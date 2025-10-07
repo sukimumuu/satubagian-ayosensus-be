@@ -134,6 +134,11 @@ return [
             'days' => 14,
         ],
 
+        'sendotp' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/sendotp.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
     ],
 
 ];

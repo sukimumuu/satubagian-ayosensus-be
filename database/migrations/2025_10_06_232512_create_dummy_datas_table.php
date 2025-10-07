@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nik', 16)->unique();
             $table->string('phone');
             $table->string('mother_name');
+            $table->string('kode_desa');
         });
 
         Schema::create('dummy_jobs', function (Blueprint $table) {

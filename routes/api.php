@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\V1\OfficerManagementController;
 
 Route::prefix('v1')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
-
+    
     // Region
     Route::get('/region/subdistrict', [RegionController::class, 'getSubdistrict']);
     Route::post('/region/village', [RegionController::class, 'searchVillage']);
@@ -18,6 +18,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/dummy/educations', [DummyDataController::class, 'dummyEducations']);
     Route::get('/dummy/jobs', [DummyDataController::class, 'dummyJobs']);
     
+    Route::post('/check-nik', [AuthController::class, 'checkNik']);
+
     Route::middleware(['auth:api'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/me', [AuthController::class, 'me']);

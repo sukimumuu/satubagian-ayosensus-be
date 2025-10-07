@@ -16,28 +16,33 @@ class DummyDataSeeder extends Seeder
         DB::table('dummy_datas')->insert([
             [
                 'nik' => '3171010101900001',
-                'phone' => '801234567890',
+                'phone' => '6285848186286',
                 'mother_name' => 'Siti Aminah',
+                'kode_desa' => 3302032002
             ],
             [
                 'nik' => '3201020202950002',
-                'phone' => '802345678901',
+                'phone' => '6283104788904',
                 'mother_name' => 'Dewi Lestari',
+                'kode_desa' => 3302032002
             ],
             [
                 'nik' => '3578030303880003',
-                'phone' => '803456789012',
+                'phone' => '6285842643497',
                 'mother_name' => 'Sri Wahyuni',
+                'kode_desa' => 3302032002
             ],
             [
                 'nik' => '5171040404990004',
                 'phone' => '804567890123',
                 'mother_name' => 'Rina Hartati',
+                'kode_desa' => 3302261006
             ],
             [
                 'nik' => '6271050505000005',
                 'phone' => '805678901234',
                 'mother_name' => 'Indah Permatasari',
+                'kode_desa' => 3302261006
             ],
         ]);
         DB::table('dummy_jobs')->insert([
