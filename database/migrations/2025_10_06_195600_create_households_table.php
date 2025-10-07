@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('address');
             $table->string('rw', 3);
             $table->string('rt', 3);
-            $table->unsignedBigInteger('kode_desa');
+            $table->bigInteger('kode_desa');
             $table->foreign('kode_desa')->references('kode')->on('villages')->onDelete('cascade');
             $table->string('zipcode', 5);
             $table->timestamps();
@@ -68,7 +68,7 @@ return new class extends Migration
             $table->unsignedBigInteger('household_id');
             $table->foreign('household_id')->references('id')->on('households')->onDelete('cascade');
             $table->string('ownership_status');
-            $table01->string('electricity');
+            $table->string('electricity');
             $table->string('water');
             $table->string('toilet');
             $table->string('floor');
@@ -81,6 +81,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('housings');
+        Schema::dropIfExists('educations');
+        Schema::dropIfExists('works');
+        Schema::dropIfExists('individuals');
         Schema::dropIfExists('households');
     }
 };

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\RegionController;
+use App\Http\Controllers\Api\V1\DummyDataController;
 use App\Http\Controllers\Api\V1\OfficerManagementController;
 
 Route::prefix('v1')->group(function () {
@@ -13,6 +14,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/region/subdistrict', [RegionController::class, 'getSubdistrict']);
     Route::post('/region/village', [RegionController::class, 'searchVillage']);
 
+    // Dummy Data
+    Route::get('/dummy/educations', [DummyDataController::class, 'dummyEducations']);
+    Route::get('/dummy/jobs', [DummyDataController::class, 'dummyJobs']);
+    
     Route::middleware(['auth:api'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/me', [AuthController::class, 'me']);

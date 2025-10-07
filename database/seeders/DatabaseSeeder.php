@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Database\Seeders\VillageSeeder;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\DummyDataSeeder;
 use Database\Seeders\SubdistrictSeeder;
 use Database\Seeders\RoleAndPermissionSeeder;
 
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([RoleAndPermissionSeeder::class, SubdistrictSeeder::class, VillageSeeder::class]);
+        $this->call([RoleAndPermissionSeeder::class, SubdistrictSeeder::class, VillageSeeder::class, DummyDataSeeder::class]);
         $superadmin = User::create([
                         'name' => 'superadmin',
                         'password' => Hash::make('password'),

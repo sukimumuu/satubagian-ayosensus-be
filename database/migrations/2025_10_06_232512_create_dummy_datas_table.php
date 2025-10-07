@@ -16,7 +16,16 @@ return new class extends Migration
             $table->string('nik', 16)->unique();
             $table->string('phone');
             $table->string('mother_name');
-            $table->timestamps();
+        });
+
+        Schema::create('dummy_jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+        });
+
+        Schema::create('dummy_educations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
         });
     }
 
@@ -25,6 +34,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('dummy_educations');
+        Schema::dropIfExists('dummy_jobs');
         Schema::dropIfExists('dummy_datas');
     }
 };
