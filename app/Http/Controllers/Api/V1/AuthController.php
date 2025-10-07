@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\MeResource;
 use App\Http\Controllers\Controller;
@@ -20,6 +21,8 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+        User::find(auth()->user()->id)->update(['is_active' => 1]);
 
         return $this->respondWithToken($token);
     }
@@ -41,6 +44,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        User::find(auth()->user()->id)->update(['is_active' => 0]);
         auth()->logout();
 
         return response()->json(['message' => 'Berhasil logout !']);

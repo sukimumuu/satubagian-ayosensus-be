@@ -22,6 +22,7 @@ class MeResource extends JsonResource
             'middle_name' => $this->middle_name ?? null,
             'last_name' => $this->last_name ?? null,
             'kode_desa' => $this->kode_desa ?? null,
+            'is_active' => $this->is_active == 1 ? "Aktif" : "Tidak Aktif",
             'nik' => $this->nik ?? null,
             'phone' => $this->phone ?? null,
         ];

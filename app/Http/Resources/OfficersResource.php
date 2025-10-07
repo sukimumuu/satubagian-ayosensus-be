@@ -18,7 +18,7 @@ class OfficersResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'kode_desa' => $this->kode_desa,
-            'is_active' => $this->is_active,
+            'is_active' => $this->is_active == 1 ? "Aktif" : "Tidak Aktif",
             'first_name' => $this->first_name ?? null,
             'middle_name' => $this->middle_name ?? null,
             'last_name' => $this->last_name ?? null,
