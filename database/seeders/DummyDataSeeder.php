@@ -16,19 +16,19 @@ class DummyDataSeeder extends Seeder
         DB::table('dummy_datas')->insert([
             [
                 'nik' => '3171010101900001',
-                'phone' => '6285848186286',
+                'phone' => env('DUMMY_1'),
                 'mother_name' => 'Siti Aminah',
                 'kode_desa' => 3302032002
             ],
             [
                 'nik' => '3201020202950002',
-                'phone' => '6283104788904',
+                'phone' => env('DUMMY_2'),
                 'mother_name' => 'Dewi Lestari',
                 'kode_desa' => 3302032002
             ],
             [
                 'nik' => '3578030303880003',
-                'phone' => '6285842643497',
+                'phone' => env('DUMMY_3'),
                 'mother_name' => 'Sri Wahyuni',
                 'kode_desa' => 3302032002
             ],
