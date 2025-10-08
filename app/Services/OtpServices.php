@@ -58,7 +58,7 @@ class OtpServices
             "user_code" => env('USER_CODE'),
             "device_id" => env('DEVICE_ID'),
             "receiver" => $user->phone,
-            "message" => "Kode OTP anda untuk masuk ke Ayo Sensus adalah " . "*" . $user->otp . "*" ."Jangan berikan kode ini kepada siapapun\n\nTerimakasih telah menggunakan Ayo Sensus untuk bantu meningkatkan percepatan pendataan warga di Indonesia",
+            "message" => "Kode OTP anda untuk masuk ke Ayo Sensus adalah " . "*" . $user->otp . "*" ." Jangan berikan kode ini kepada siapapun\n\nTerimakasih telah menggunakan Ayo Sensus untuk bantu meningkatkan percepatan pendataan warga di Indonesia",
             "secret" => env('SECRET_KEY'),
         ]);
         Log::channel('sendotp')->info($response->json());

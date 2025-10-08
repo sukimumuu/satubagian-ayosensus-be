@@ -86,6 +86,13 @@ class AuthController extends Controller
                 'mother_name' => 'required',
                 'phone' => 'required',
             ]);
+
+            if (User::where('name', $data['nik'])->where('is_valid', 1)->exists()) {
+                return response()->json([
+                    'success'  => false,
+                    'message' => 'NIK sudah diaktivasi !'
+                ], 422);
+            }
             
             $result = $otpServices->checkNik($data);
             
@@ -104,6 +111,43 @@ class AuthController extends Controller
 
         } catch (\Throwable $th) {
             Log::error("Message validate nik : ".$th->getMessage());
+            return response()->json([
+                'success'  => false,
+                'message' => $th->getMessage()
+            ], 422);
+        }
+    }
+
+    public function validateOtp(Request $request){
+        try {
+            $data = $request->validate([
+                'nik' => 'required|max:16',
+                'otp' => 'required',
+            ]);
+
+            $user = User::where('name', $data['nik'])->where('otp', $data['otp'])->first();
+
+            if (!$user) {
+                return response()->json([
+                    'success'  => false,
+                    'message' => 'OTP anda salah !'
+                ], 422);
+            }
+
+            $token = auth()->attempt([
+                'name' => $data['nik'],
+                'password' => $data['otp']
+            ]);
+
+            $user->update([
+                'is_active' => 1,
+                'otp' => null
+            ]);
+
+            return $this->respondWithToken($token);
+
+        } catch (\Throwable $th) {
+            Log::error("Message validate otp : ".$th->getMessage());
             return response()->json([
                 'success'  => false,
                 'message' => $th->getMessage()

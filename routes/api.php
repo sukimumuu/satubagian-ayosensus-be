@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/dummy/jobs', [DummyDataController::class, 'dummyJobs']);
     
     Route::post('/check-nik', [AuthController::class, 'checkNik']);
+    Route::post('/validasi-otp', [AuthController::class, 'validateOtp']);
 
     Route::middleware(['auth:api'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
