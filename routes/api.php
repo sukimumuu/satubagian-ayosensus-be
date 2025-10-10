@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ChartController;
 use App\Http\Controllers\Api\V1\RegionController;
 use App\Http\Controllers\Api\V1\VerifierController;
 use App\Http\Controllers\Api\V1\DummyDataController;
@@ -23,6 +24,8 @@ Route::prefix('v1')->group(function () {
     Route::post('/check-nik', [AuthController::class, 'checkNik']);
     Route::post('/login-user', [AuthController::class, 'loginUser']);
     Route::post('/validasi-otp', [AuthController::class, 'validateOtp']);
+
+    Route::get('/chart-sensus-by-kecamatan', [ChartController::class, 'summaryPerKecamatan']);
 
     Route::middleware(['auth:api'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
