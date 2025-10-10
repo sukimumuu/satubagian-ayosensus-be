@@ -34,7 +34,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->integer('stay')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
-            $table->date('birth_place')->nullable();
+            $table->string('birth_place')->nullable();
             $table->date('birth_date')->nullable();
             $table->enum('nationality', ['wni', 'wna'])->nullable();
             $table->string('tribes')->nullable();

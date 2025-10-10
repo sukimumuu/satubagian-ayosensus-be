@@ -23,12 +23,12 @@ class InputFamilyRequest extends FormRequest
     {
         return [
             'user_id' => 'nullable',
-            'no_kk' => 'required',
-            'address' => 'required',
-            'rw' => 'required',
-            'rt' => 'required',
+            'no_kk' => 'nullable',
+            'address' => 'nullable',
+            'rw' => 'nullable',
+            'rt' => 'nullable',
             'kode_desa' => 'nullable',
-            'zipcode' => 'required',
+            'zipcode' => 'nullable',
         ];
     }
 

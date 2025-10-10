@@ -25,6 +25,7 @@ class MeResource extends JsonResource
             'is_active' => $this->is_active == 1 ? "Aktif" : "Tidak Aktif",
             'nik' => $this->nik ?? null,
             'phone' => $this->phone ?? null,
+            'household_id' => $this->household?->id
         ];
     }
 }
