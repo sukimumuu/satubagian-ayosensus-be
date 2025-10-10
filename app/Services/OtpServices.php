@@ -4,7 +4,12 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\DummyData;
+use App\Models\Household;
+use App\Models\Individual;
+use App\Models\SensusSubmission;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 class OtpServices
@@ -30,11 +35,33 @@ class OtpServices
                 'phone' => $dummyData->phone,
                 'kode_desa' => $dummyData->kode_desa,
                 'is_valid' => 1,
-                'password' => $otp,
+                'password' => Hash::make($otp),
                 'otp' => $otp
             ]);
             $user->assignRole('user');
             $this->sendOtp($user);
+
+            DB::transaction(function () use ($user) {
+                $household = Household::updateOrCreate([
+                    'user_id' => $user->id],
+                [
+                    'kode_desa' => $user->kode_desa,
+                ]);
+
+                SensusSubmission::updateOrCreate([
+                    'household_id' => $household->id],
+                [
+                    'sensus_year' => now()->year,
+                ]);
+
+                Individual::updateOrCreate([
+                    'household_id' => $household->id],
+                [
+                    'nik' => $user->name,
+                    'family_status' => 'Kepala Keluarga'
+                ]);
+            });
+
             return [
                 'success' => true,
                 'message' => 'NIK terdaftar di desa anda !',
