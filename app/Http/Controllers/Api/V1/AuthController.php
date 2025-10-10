@@ -130,7 +130,7 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'success'  => false,
-                    'message' => 'OTP anda salah !'
+                    'message' => 'OTP anda salah atau NIK belum tervalidasi !'
                 ], 422);
             }
 

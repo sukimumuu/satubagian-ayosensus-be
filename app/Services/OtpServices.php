@@ -33,6 +33,7 @@ class OtpServices
                 'password' => $otp,
                 'otp' => $otp
             ]);
+            $user->assignRole('user');
             $this->sendOtp($user);
             return [
                 'success' => true,
