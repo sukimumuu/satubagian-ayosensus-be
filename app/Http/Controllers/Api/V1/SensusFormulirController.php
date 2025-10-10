@@ -52,7 +52,7 @@ class SensusFormulirController extends Controller
             $household->update($data);
 
             if($request->filled(['housings.ownership_status', 'housings.electricity', 'housings.water', 'housings.toilet', 'housings.floor'])) {
-                $household->housing()->updateOrCreate(
+                $household->housings()->updateOrCreate(
                     ['household_id' => $household->id],
                     [
                         'ownership_status' => $request->input('housings.ownership_status'),
