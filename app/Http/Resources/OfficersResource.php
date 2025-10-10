@@ -22,6 +22,7 @@ class OfficersResource extends JsonResource
             'first_name' => $this->first_name ?? null,
             'middle_name' => $this->middle_name ?? null,
             'last_name' => $this->last_name ?? null,
+            'role' => $this->getRoleNames(),
         ];
     }
 }
