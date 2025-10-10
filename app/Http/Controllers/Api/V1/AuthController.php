@@ -8,6 +8,7 @@ use App\Services\OtpServices;
 use App\Http\Resources\MeResource;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -118,14 +119,50 @@ class AuthController extends Controller
         }
     }
 
+    public function loginUser(Request $request, OtpServices $otpServices){
+        try {
+            $data = $request->validate([
+                'name' => 'required',
+                'phone' => 'required',
+            ]);
+
+            $user = User::where('name', $data['name'])->first();
+
+            if (!$user) {
+                return response()->json([
+                    'success'  => false,
+                    'message' => 'NIK belum tervalidasi !'
+                ], 422);
+            }
+            $otp = mt_rand(100000, 999999);
+            $user->update([
+                'otp' => $otp,
+                'password' => Hash::make($otp)
+            ]);
+            $otpServices->sendOtp($user);
+
+            return response()->json([
+               'success'  => true,
+               'message' => 'OTP berhasil dikirim !'
+            ]);
+
+        } catch (\Throwable $th) {
+            Log::error("Message validate otp : ".$th->getMessage());
+            return response()->json([
+                'success'  => false,
+                'message' => $th->getMessage()
+            ], 422);
+        }
+    }
+
     public function validateOtp(Request $request){
         try {
             $data = $request->validate([
-                'nik' => 'required|max:16',
+                'name' => 'required|max:16',
                 'otp' => 'required',
             ]);
 
-            $user = User::where('name', $data['nik'])->where('otp', $data['otp'])->first();
+            $user = User::where('name', $data['name'])->where('otp', $data['otp'])->first();
 
             if (!$user) {
                 return response()->json([
@@ -135,7 +172,7 @@ class AuthController extends Controller
             }
 
             $token = auth()->attempt([
-                'name' => $data['nik'],
+                'name' => $data['name'],
                 'password' => $data['otp']
             ]);
 

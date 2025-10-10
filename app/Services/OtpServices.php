@@ -54,7 +54,7 @@ class OtpServices
     }
 
 
-    protected function sendOtp($user): void{
+    public function sendOtp($user): void{
         $response = Http::post('https://api.kirimi.id/v1/send-message', [
             "user_code" => env('USER_CODE'),
             "device_id" => env('DEVICE_ID'),

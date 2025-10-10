@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('no_kk')->unique();
-            $table->text('address');
-            $table->string('rw', 3);
-            $table->string('rt', 3);
+            $table->string('no_kk')->unique()->nullable();
+            $table->text('address')->nullable();
+            $table->string('rw', 3)->nullable();
+            $table->string('rt', 3)->nullable();
             $table->bigInteger('kode_desa');
             $table->foreign('kode_desa')->references('kode')->on('villages')->onDelete('cascade');
-            $table->string('zipcode', 5);
+            $table->string('zipcode', 5)->nullable();
             $table->timestamps();
         });
 
@@ -29,49 +29,49 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('household_id');
             $table->foreign('household_id')->references('id')->on('households')->onDelete('cascade');
-            $table->string('full_name');
-            $table->string('nik', 16)->unique();
-            $table->text('address');
-            $table->integer('stay');
-            $table->enum('gender', ['male', 'female']);
-            $table->date('birth_place');
-            $table->date('birth_date');
-            $table->enum('nationality', ['wni', 'wna']);
-            $table->string('tribes');
-            $table->enum('religion', ['islam', 'kristen', 'katolik', 'hindu', 'budha', 'konghucu', 'lainnya']);
-            $table->string('used_language');
-            $table->string('family_status', 20);
-            $table->enum('marital_status', ['married', 'single']);
+            $table->string('full_name')->nullable();
+            $table->string('nik', 16)->nullable()->unique();
+            $table->text('address')->nullable();
+            $table->integer('stay')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->date('birth_place')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->enum('nationality', ['wni', 'wna'])->nullable();
+            $table->string('tribes')->nullable();
+            $table->enum('religion', ['islam', 'kristen', 'katolik', 'hindu', 'budha', 'konghucu', 'lainnya'])->nullable();
+            $table->string('used_language')->nullable();
+            $table->string('family_status', 20)->nullable();
+            $table->enum('marital_status', ['married', 'single'])->nullable();
             $table->timestamps();
         });
 
         Schema::create('works', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('individual_id');
+            $table->unsignedBigInteger('individual_id')->nullable();
             $table->foreign('individual_id')->references('id')->on('individuals')->onDelete('cascade');
-            $table->string('activity');
-            $table->string('job');
-            $table->string('job_status');
+            $table->string('activity')->nullable();
+            $table->string('job')->nullable();
+            $table->string('job_status')->nullable();
             $table->timestamps();
         });
 
         Schema::create('educations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('individual_id');
+            $table->unsignedBigInteger('individual_id')->nullable();
             $table->foreign('individual_id')->references('id')->on('individuals')->onDelete('cascade');
-            $table->string('education');
+            $table->string('education')->nullable();
             $table->timestamps();
         });
 
         Schema::create('housings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('household_id');
+            $table->unsignedBigInteger('household_id')->nullable();
             $table->foreign('household_id')->references('id')->on('households')->onDelete('cascade');
-            $table->string('ownership_status');
-            $table->string('electricity');
-            $table->string('water');
-            $table->string('toilet');
-            $table->string('floor');
+            $table->string('ownership_status')->nullable();
+            $table->string('electricity')->nullable();
+            $table->string('water')->nullable();
+            $table->string('toilet')->nullable();
+            $table->string('floor')->nullable();
             $table->timestamps();
         });
     }
