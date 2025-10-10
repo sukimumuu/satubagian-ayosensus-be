@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Household;
+use App\Models\Individual;
 use Illuminate\Http\Request;
 use App\Models\SensusSubmission;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,12 @@ class SensusFormulirController extends Controller
             SensusSubmission::firstOrCreate([
                 'household_id' => $household->id,
                 'sensus_year' => now()->year,
+            ]);
+
+            Individual::firstOrCreate([
+                'household_id' => $household->id,
+                'nik' => auth()->user()->name,
+                'family_status' => 'Kepala Keluarga'
             ]);
         });
 
