@@ -29,18 +29,11 @@ class InputFamilyRequest extends FormRequest
             'rt' => 'nullable',
             'kode_desa' => 'nullable',
             'zipcode' => 'nullable',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'no_kk.required' => 'No KK harus diisi.',
-            'address.required' => 'Alamat harus diisi.',
-            'rw.required' => 'RW harus diisi.',
-            'rt.required' => 'RT harus diisi.',
-            'kode_desa.required' => 'Desa harus diisi.',
-            'zip_code.required' => 'Kode Pos harus diisi.',
+            'housings.ownership_status' => 'nullable',
+            'housings.electricity' => 'nullable',
+            'housings.water' => 'nullable',
+            'housings.toilet' => 'nullable',
+            'housings.floor' => 'nullable',
         ];
     }
 }

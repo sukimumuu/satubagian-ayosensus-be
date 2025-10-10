@@ -47,9 +47,21 @@ class SensusFormulirController extends Controller
         $data['user_id'] = auth()->user()->id;
         $data['kode_desa'] = auth()->user()->kode_desa;
 
-        DB::transaction(function () use ($data) {
+        DB::transaction(function () use ($data, $request) {
             $household = HouseHold::where('user_id', $data['user_id'])->first();
             $household->update($data);
+
+            if($request->filled(['housings.ownership_status', 'housings.electricity', 'housings.water', 'housings.toilet', 'housings.floor'])) {
+                $household->housing()->updateOrCreate(
+                    ['household_id' => $household->id],
+                    [
+                        'ownership_status' => $request->input('housings.ownership_status'),
+                        'electricity' => $request->input('housings.electricity'),
+                        'water' => $request->input('housings.water'),
+                        'toilet' => $request->input('housings.toilet'),
+                        'floor' => $request->input('housings.floor'),
+                    ]);
+            }
         });
         return response()->json([
             'success' => true,
@@ -96,7 +108,7 @@ class SensusFormulirController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Data Keluarga Berhasil Diambil!',
-            'data' => $household
+            'data' => $household->load('housing')
         ]);        
     }
 
