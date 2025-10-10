@@ -40,6 +40,7 @@ Route::prefix('v1')->group(function () {
         Route::middleware(['role:verifier'])->group(function () {
             // Sensus Data
             Route::get('/sensus', [VerifierController::class, 'index']);
+            Route::post('/sensus', [VerifierController::class, 'sentStatusSensus']);
         });
         Route::middleware(['role:superadmin'])->group(function () {
             // Officer Management

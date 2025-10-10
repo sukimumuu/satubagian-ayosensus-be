@@ -129,6 +129,7 @@ class SensusFormulirController extends Controller
             [
                 'sensus_year' => now()->year,
                 'status' => 'submitted',
+                'submitted_at' => now()
             ]);
 
         return response()->json([

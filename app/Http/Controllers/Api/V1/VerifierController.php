@@ -25,4 +25,20 @@ class VerifierController extends Controller
             'data' => $data
         ]);
     }
+
+    public function sentStatusSensus(Request $request){
+        $submission = SensusSubmission::where('id', $request->id)->first();
+        $submission->status = $request->status;
+        $submission->verified_by_id = auth()->user()->id;
+        $submission->verified_at = now();
+        $submission->notes = $request->notes ?? null;
+        $submission->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sensus formulir berhasil disetujui !',
+        ], 200);
+    }
+
+    
 }
