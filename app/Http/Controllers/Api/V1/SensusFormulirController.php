@@ -121,4 +121,19 @@ class SensusFormulirController extends Controller
             'data' => $household->individuals
         ]);        
     }
+
+    public function submitSensus(){
+        $household = Household::where('user_id', auth()->user()->id)->first();
+        $household->submission()->updateOrCreate([
+            'household_id' => $household->id],
+            [
+                'sensus_year' => now()->year,
+                'status' => 'submitted',
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sensus formulir berhasil dikirim ke petugas !',
+        ], 200);
+    }
 }

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\RegionController;
+use App\Http\Controllers\Api\V1\VerifierController;
 use App\Http\Controllers\Api\V1\DummyDataController;
 use App\Http\Controllers\Api\V1\SensusFormulirController;
 use App\Http\Controllers\Api\V1\OfficerManagementController;
@@ -29,12 +30,17 @@ Route::prefix('v1')->group(function () {
 
         // Sensus Formulir
         Route::get('/mulai-sensus', [SensusFormulirController::class, 'startSensus']);
+        Route::post('/submit-sensus', [SensusFormulirController::class, 'submitSensus']);
         Route::post('/kirim-keluarga', [SensusFormulirController::class, 'storeFamily']);
         Route::post('/kirim-anggota-keluarga', [SensusFormulirController::class, 'storeMemberFamily']);
 
         Route::get('/keluarga', [SensusFormulirController::class, 'getFamily']);
         Route::get('/anggota-keluarga', [SensusFormulirController::class, 'getFamilyMember']);
-
+        
+        Route::middleware(['role:verifier'])->group(function () {
+            // Sensus Data
+            Route::get('/sensus', [VerifierController::class, 'index']);
+        });
         Route::middleware(['role:superadmin'])->group(function () {
             // Officer Management
             Route::get('/officer', [OfficerManagementController::class, 'index']);
