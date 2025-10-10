@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('households', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->unique();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('no_kk')->unique()->nullable();
             $table->text('address')->nullable();
             $table->string('rw', 3)->nullable();
             $table->string('rt', 3)->nullable();
             $table->bigInteger('kode_desa');
-            $table->foreign('kode_desa')->references('kode')->on('villages')->onDelete('cascade');
+            $table->foreign('kode_desa')->references('kode')->on('villages');
             $table->string('zipcode', 5)->nullable();
             $table->timestamps();
         });
@@ -28,7 +28,7 @@ return new class extends Migration
         Schema::create('individuals', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('household_id');
-            $table->foreign('household_id')->references('id')->on('households')->onDelete('cascade');
+            $table->foreign('household_id')->references('id')->on('households');
             $table->string('full_name')->nullable();
             $table->string('nik', 16)->nullable()->unique();
             $table->text('address')->nullable();
@@ -48,7 +48,7 @@ return new class extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('individual_id')->nullable();
-            $table->foreign('individual_id')->references('id')->on('individuals')->onDelete('cascade');
+            $table->foreign('individual_id')->references('id')->on('individuals');
             $table->string('activity')->nullable();
             $table->string('job')->nullable();
             $table->string('job_status')->nullable();
@@ -58,7 +58,7 @@ return new class extends Migration
         Schema::create('educations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('individual_id')->nullable();
-            $table->foreign('individual_id')->references('id')->on('individuals')->onDelete('cascade');
+            $table->foreign('individual_id')->references('id')->on('individuals');
             $table->string('education')->nullable();
             $table->timestamps();
         });
@@ -66,7 +66,7 @@ return new class extends Migration
         Schema::create('housings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('household_id')->nullable();
-            $table->foreign('household_id')->references('id')->on('households')->onDelete('cascade');
+            $table->foreign('household_id')->references('id')->on('households');
             $table->string('ownership_status')->nullable();
             $table->string('electricity')->nullable();
             $table->string('water')->nullable();

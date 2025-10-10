@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('sensus_submissions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('household_id');
-            $table->foreign('household_id')->references('id')->on('households')->onDelete('cascade');
+            $table->foreign('household_id')->references('id')->on('households');
             $table->enum('status', ['draft', 'submitted', 'verified',  'rejected'])->default('draft');
             $table->timestamp('submitted_at')->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->unsignedBigInteger('verified_by_id')->nullable();
-            $table->foreign('verified_by_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('verified_by_id')->references('id')->on('users');
             $table->text('notes')->nullable();
             $table->year('sensus_year')->nullable();
             $table->timestamps();

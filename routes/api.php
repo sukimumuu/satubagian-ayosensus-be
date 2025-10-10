@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
 
         // Sensus Formulir
         Route::get('/mulai-sensus', [SensusFormulirController::class, 'startSensus']);
+        Route::post('/kirim-keluarga', [SensusFormulirController::class, 'storeFamily']);
 
         Route::middleware(['role:superadmin'])->group(function () {
             // Officer Management

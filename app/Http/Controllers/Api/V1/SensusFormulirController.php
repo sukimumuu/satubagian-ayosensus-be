@@ -8,23 +8,24 @@ use Illuminate\Http\Request;
 use App\Models\SensusSubmission;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InputFamilyRequest;
 
 class SensusFormulirController extends Controller
 {
     public function startSensus()
     {
        DB::transaction(function () {
-            $household = Household::firstOrCreate([
+            $household = Household::create([
                 'user_id' => auth()->id(),
                 'kode_desa' => auth()->user()->kode_desa,
             ]);
 
-            SensusSubmission::firstOrCreate([
+            SensusSubmission::create([
                 'household_id' => $household->id,
                 'sensus_year' => now()->year,
             ]);
 
-            Individual::firstOrCreate([
+            Individual::create([
                 'household_id' => $household->id,
                 'nik' => auth()->user()->name,
                 'family_status' => 'Kepala Keluarga'
@@ -34,6 +35,21 @@ class SensusFormulirController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Sensus formulir berhasil dimulai!',
+        ], 200);
+    }
+
+    public function storeFamily(InputFamilyRequest $request){
+        $data = $request->validated();
+        $data['user_id'] = auth()->user()->id;
+        $data['kode_desa'] = auth()->user()->kode_desa;
+
+        DB::transaction(function () use ($data) {
+            $household = HouseHold::where('user_id', $data['user_id'])->first();
+            $household->update($data);
+        });
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Keluarga Berhasil Disimpan!',
         ], 200);
     }
 }
