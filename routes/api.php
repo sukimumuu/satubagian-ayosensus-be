@@ -32,6 +32,9 @@ Route::prefix('v1')->group(function () {
         Route::post('/kirim-keluarga', [SensusFormulirController::class, 'storeFamily']);
         Route::post('/kirim-anggota-keluarga', [SensusFormulirController::class, 'storeMemberFamily']);
 
+        Route::get('/keluarga', [SensusFormulirController::class, 'getFamily']);
+        Route::get('/anggota-keluarga', [SensusFormulirController::class, 'getFamilyMember']);
+
         Route::middleware(['role:superadmin'])->group(function () {
             // Officer Management
             Route::get('/officer', [OfficerManagementController::class, 'index']);

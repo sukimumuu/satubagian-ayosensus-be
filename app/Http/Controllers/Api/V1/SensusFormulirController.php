@@ -16,18 +16,21 @@ class SensusFormulirController extends Controller
     public function startSensus()
     {
        DB::transaction(function () {
-            $household = Household::create([
-                'user_id' => auth()->id(),
+            $household = Household::updateOrCreate([
+                'user_id' => auth()->id()],
+            [
                 'kode_desa' => auth()->user()->kode_desa,
             ]);
 
-            SensusSubmission::create([
-                'household_id' => $household->id,
+            SensusSubmission::updateOrCreate([
+                'household_id' => $household->id],
+            [
                 'sensus_year' => now()->year,
             ]);
 
-            Individual::create([
-                'household_id' => $household->id,
+            Individual::updateOrCreate([
+                'household_id' => $household->id],
+            [
                 'nik' => auth()->user()->name,
                 'family_status' => 'Kepala Keluarga'
             ]);
@@ -85,5 +88,25 @@ class SensusFormulirController extends Controller
             'success' => true,
             'message' => 'Data Anggota Keluarga Berhasil Disimpan!',
         ], 200);
+    }
+
+    public function getFamily(){
+        $household = Household::where('user_id', auth()->user()->id)->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Keluarga Berhasil Diambil!',
+            'data' => $household
+        ]);        
+    }
+
+    public function getFamilyMember(){
+        $household = Household::where('user_id', auth()->user()->id)->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Anggota Keluarga Berhasil Diambil!',
+            'data' => $household->individuals
+        ]);        
     }
 }
