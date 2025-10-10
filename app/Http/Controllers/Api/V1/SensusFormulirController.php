@@ -108,10 +108,7 @@ class SensusFormulirController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Data Keluarga Berhasil Diambil!',
-            'data' => [
-                'household' => $household->makeHidden('housing'),
-                'housings' => $household->housing
-            ]
+            'data' => $household->load('housings')
         ]);        
     }
 

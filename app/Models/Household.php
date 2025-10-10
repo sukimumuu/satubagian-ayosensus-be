@@ -26,7 +26,7 @@ class Household extends Model
         return $this->hasOne(SensusSubmission::class, 'household_id');
     }
 
-    public function housing()
+    public function housings()
     {
         return $this->hasOne(Housing::class, 'household_id');
     }
